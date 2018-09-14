@@ -1,0 +1,15 @@
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ST Editor.exe.config
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ST Editor.exe
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ST Editor.pdb
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\zlibnet.dll
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\WindowsFormsApp1.MainSheet.resources
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\STEditor.Properties.Resources.resources
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\ST Editor.csproj.GenerateResource.cache
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\ST Editor.csproj.CoreCompileInputs.cache
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\ST Editor.csproj.CopyComplete
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\ST Editor.exe
+C:\Users\Luke\source\repos\ST Editor\ST Editor\obj\Debug\ST Editor.pdb
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ST Editor.exe.CodeAnalysisLog.xml
+C:\Users\Luke\source\repos\ST Editor\ST Editor\bin\Debug\ST Editor.exe.lastcodeanalysissucceeded
