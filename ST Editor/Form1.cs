@@ -10,71 +10,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using ICSharpCode.SharpZipLib.Core;
-//using ICSharpCode.SharpZipLib.Zip;
-//using ZLibNet;
-
 
 namespace WindowsFormsApp1
 {
     public partial class MainSheet : Form
     {
         int capsByte;
-        bool LifeCountTextChangedFires = true;
+        bool TextChangedFires = true;
         public string UpOneLevel(string inputPath) {
             return Path.GetFullPath(Path.Combine(inputPath, @"../"));
         }
         public MainSheet() { InitializeComponent(); }
         string path;
-        /*  public void ExtractZipFile(string archiveFilenameIn, string password, string outFolder)
-          {
-              ZipFile zf = null;
-              try
-              {
-                  FileStream fs = File.OpenRead(archiveFilenameIn);
-                  zf = new ZipFile(fs);
-                  if (!String.IsNullOrEmpty(password))
-                  {
-                      zf.Password = password;     // AES encrypted entries are handled automatically
-                  }
-                  foreach (ZipEntry zipEntry in zf)
-                  {
-                      if (!zipEntry.IsFile)
-                      {
-                          continue;           // Ignore directories
-                      }
-                      String entryFileName = zipEntry.Name;
-                      // to remove the folder from the entry:- entryFileName = Path.GetFileName(entryFileName);
-                      // Optionally match entrynames against a selection list here to skip as desired.
-                      // The unpacked length is available in the zipEntry.Size property.
-
-                      byte[] buffer = new byte[4096];     // 4K is optimum
-                      Stream zipStream = zf.GetInputStream(zipEntry);
-
-                      // Manipulate the output filename here as desired.
-                      String fullZipToPath = Path.Combine(outFolder, entryFileName);
-                      string directoryName = Path.GetDirectoryName(fullZipToPath);
-                      if (directoryName.Length > 0)
-                          Directory.CreateDirectory(directoryName);
-
-                      // Unzip file in buffered chunks. This is just as fast as unpacking to a buffer the full size
-                      // of the file, but does not waste memory.
-                      // The "using" will close the stream even if an exception occurs.
-                      using (FileStream streamWriter = File.Create(fullZipToPath))
-                      {
-                          StreamUtils.Copy(zipStream, streamWriter, buffer);
-                      }
-                  }
-              }
-              finally
-              {
-                  if (zf != null)
-                  {
-                      zf.IsStreamOwner = true; // Makes close also shut the underlying stream
-                      zf.Close(); // Ensure we release resources
-                  }
-              }
-          }*/
+        public static uint AddressToPointer (uint address)
+        {
+            address += 0x1B0;
+            Console.WriteLine(3 + address - 2 * (address % 4));
+            return 3 + address - 2 * (address % 4);
+        }
         public static byte[] Compress(byte[] raw)
         {
             using (MemoryStream memory = new MemoryStream())
@@ -133,22 +86,54 @@ namespace WindowsFormsApp1
                 Console.WriteLine(UpOneLevel(path));
                 byte[] file = File.ReadAllBytes(path);
                 byte[] decompressed = Decompress(file);
-                Console.WriteLine(file.Length);
-                Console.WriteLine(decompressed.Length);
+               // Console.WriteLine(file.Length);
+               // Console.WriteLine(decompressed.Length);
                 File.WriteAllBytes(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", decompressed);
-
+                TextChangedFires = false;
                 using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                 {
-                    stream.Position = 2128056; //-1 for 0-index ordering, -1 for endianness of byte
+                    stream.Position = AddressToPointer(0x0020770B);
                     capsByte = stream.ReadByte();
-                    stream.Position = 3388366;
-                    LifeCountTextChangedFires = false;
+                    stream.Position = AddressToPointer(0x0033B21D);
                     LifeCount.Text = ((sbyte)stream.ReadByte()).ToString();
-                    LifeCountTextChangedFires = true;
+                    byte[] HOLPx;
+                    HOLPx = new byte[4];
+                    stream.Position = AddressToPointer(0x0033B3C8);
+                    HOLPx[3] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3C9);
+                    HOLPx[2] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3CA);
+                    HOLPx[1] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3CB);
+                    HOLPx[0] = (byte)stream.ReadByte();
+                    HOLPXTextBox.Text = System.BitConverter.ToSingle(HOLPx,0).ToString();
+                    byte[] HOLPy;
+                    HOLPy = new byte[4];
+                    stream.Position = AddressToPointer(0x0033B3CC);
+                    HOLPy[3] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3CD);
+                    HOLPy[2] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3CE);
+                    HOLPy[1] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3CF);
+                    HOLPy[0] = (byte)stream.ReadByte();
+                    HOLPYTextBox.Text = System.BitConverter.ToSingle(HOLPy, 0).ToString();
+                    byte[] HOLPz;
+                    HOLPz = new byte[4];
+                    stream.Position = AddressToPointer(0x0033B3D0);
+                    HOLPz[3] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3D1);
+                    HOLPz[2] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3D2);
+                    HOLPz[1] = (byte)stream.ReadByte();
+                    stream.Position = AddressToPointer(0x0033B3D3);
+                    HOLPz[0] = (byte)stream.ReadByte();
+                    HOLPZTextBox.Text = System.BitConverter.ToSingle(HOLPz, 0).ToString();
                 }
                 WingCapCheck.Checked = (capsByte & 2) != 0;
                 MetalCapCheck.Checked = (capsByte & 4) != 0;
                 VanishCapCheck.Checked = (capsByte & 8) != 0;
+                TextChangedFires = true;
             }
         }
 
@@ -157,7 +142,7 @@ namespace WindowsFormsApp1
                 if (File.Exists(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt")) {
                     using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                     {
-                        stream.Position = 2128056; //-1 for 0-index ordering, -1 for endianness of byte
+                        stream.Position = AddressToPointer(0x0020770B);
                         capsByte = stream.ReadByte();
                         stream.Position--;
                         capsByte |= 14;//0000 1110. 0x2 is WC, 0x4 is MC, 0x8 is VC
@@ -191,7 +176,7 @@ namespace WindowsFormsApp1
                 {
                     using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                     {
-                        stream.Position = 2128056; //-1 for 0-index ordering, -1 for endianness of byte
+                        stream.Position = AddressToPointer(0x0020770B);
                         capsByte = stream.ReadByte();
                         stream.Position--;
                         capsByte = capsByte & ~14;//0000 1110. 0x2 is WC, 0x4 is MC, 0x8 is VC
@@ -206,78 +191,137 @@ namespace WindowsFormsApp1
 
         private void WingCapCheck_CheckedChanged(object sender, EventArgs e)
         {
-            using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+            if (path != null)
             {
-                stream.Position = 2128056; //-1 for 0-index ordering, -1 for endianness of byte
-                capsByte = stream.ReadByte();
-                stream.Position--;
-                if (WingCapCheck.Checked)
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                 {
-                    capsByte = capsByte | 2;//0000 0010. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    stream.Position = AddressToPointer(0x0020770B);
+                    capsByte = stream.ReadByte();
+                    stream.Position--;
+                    if (WingCapCheck.Checked)
+                    {
+                        capsByte = capsByte | 2;//0000 0010. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    }
+                    else
+                    {
+                        capsByte = capsByte & ~2;//0000 0010. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    }
+                    stream.WriteByte((byte)capsByte);
                 }
-                else
-                {
-                    capsByte = capsByte & ~2;//0000 0010. 0x2 is WC, 0x4 is MC, 0x8 is VC
-                }
-                stream.WriteByte((byte)capsByte);
             }
         }
         private void MetalCapCheck_CheckedChanged(object sender, EventArgs e)
         {
-            using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+            if (path != null)
             {
-                stream.Position = 2128056; //-1 for 0-index ordering, -1 for endianness of byte
-                capsByte = stream.ReadByte();
-                stream.Position--;
-                if (MetalCapCheck.Checked)
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                 {
-                    capsByte = capsByte | 4;//0000 0100. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    stream.Position = AddressToPointer(0x0020770B);
+                    capsByte = stream.ReadByte();
+                    stream.Position--;
+                    if (MetalCapCheck.Checked)
+                    {
+                        capsByte = capsByte | 4;//0000 0100. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    }
+                    else
+                    {
+                        capsByte = capsByte & ~4;//0000 0100. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    }
+                    stream.WriteByte((byte)capsByte);
                 }
-                else
-                {
-                    capsByte = capsByte & ~4;//0000 0100. 0x2 is WC, 0x4 is MC, 0x8 is VC
-                }
-                stream.WriteByte((byte)capsByte);
             }
         }
 
         private void VanishCapCheck_CheckedChanged(object sender, EventArgs e)
         {
-            using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+            if (path != null)
             {
-                stream.Position = 2128056; //-1 for 0-index ordering, -1 for endianness of byte
-                capsByte = stream.ReadByte();
-                stream.Position--;
-                if (VanishCapCheck.Checked)
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                 {
-                    capsByte = capsByte | 8;//0000 1000. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    stream.Position = AddressToPointer(0x0020770B);
+                    capsByte = stream.ReadByte();
+                    stream.Position--;
+                    if (VanishCapCheck.Checked)
+                    {
+                        capsByte = capsByte | 8;//0000 1000. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    }
+                    else
+                    {
+                        capsByte = capsByte & ~8;//0000 1000. 0x2 is WC, 0x4 is MC, 0x8 is VC
+                    }
+                    stream.WriteByte((byte)capsByte);
                 }
-                else
-                {
-                    capsByte = capsByte & ~8;//0000 1000. 0x2 is WC, 0x4 is MC, 0x8 is VC
-                }
-                stream.WriteByte((byte)capsByte);
             }
-        }
-
-        private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void LifeCount_TextChanged(object sender, EventArgs e)
         {
-            if (LifeCountTextChangedFires)
+            if (path != null && TextChangedFires) {
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                {
+                    stream.Position = AddressToPointer(0x0033B21D);
+                    int.TryParse(LifeCount.Text, out int lifeCount);
+                    stream.WriteByte((byte)lifeCount);
+                }
+            }
+        }
+
+        private void HOLPXTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (path != null && TextChangedFires)
             {
                 using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
                 {
-                    stream.Position = 3388366;
-                    int.TryParse(LifeCount.Text, out int lifeCount);
-                    stream.WriteByte((byte) lifeCount);
+                    float.TryParse(HOLPXTextBox.Text, out float HOLPX);
+                    byte[] HOLPx = System.BitConverter.GetBytes(HOLPX);
+                    stream.Position = AddressToPointer(0x0033B3C8);
+                    stream.WriteByte(HOLPx[3]); //backwards for endianness
+                    stream.Position = AddressToPointer(0x0033B3C9);
+                    stream.WriteByte(HOLPx[2]);
+                    stream.Position = AddressToPointer(0x0033B3CA);
+                    stream.WriteByte(HOLPx[1]);
+                    stream.Position = AddressToPointer(0x0033B3CB);
+                    stream.WriteByte(HOLPx[0]);
+                }
+            }
+        }
+
+        private void HOLPYTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (path != null && TextChangedFires)
+            {
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                {
+                    float.TryParse(HOLPYTextBox.Text, out float HOLPY);
+                    byte[] HOLPy = System.BitConverter.GetBytes(HOLPY);
+                    stream.Position = AddressToPointer(0x0033B3CC);
+                    stream.WriteByte(HOLPy[3]); //backwards for endianness
+                    stream.Position = AddressToPointer(0x0033B3CD);
+                    stream.WriteByte(HOLPy[2]);
+                    stream.Position = AddressToPointer(0x0033B3CE);
+                    stream.WriteByte(HOLPy[1]);
+                    stream.Position = AddressToPointer(0x0033B3CF);
+                    stream.WriteByte(HOLPy[0]);
+                }
+            }
+        }
+
+        private void HOLPZTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (path != null && TextChangedFires)
+            {
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                {
+                    float.TryParse(HOLPZTextBox.Text, out float HOLPZ);
+                    byte[] HOLPz = System.BitConverter.GetBytes(HOLPZ);
+                    stream.Position = AddressToPointer(0x0033B3D0);
+                    stream.WriteByte(HOLPz[3]); //backwards for endianness
+                    stream.Position = AddressToPointer(0x0033B3D1);
+                    stream.WriteByte(HOLPz[2]);
+                    stream.Position = AddressToPointer(0x0033B3D2);
+                    stream.WriteByte(HOLPz[1]);
+                    stream.Position = AddressToPointer(0x0033B3D3);
+                    stream.WriteByte(HOLPz[0]);
                 }
             }
         }

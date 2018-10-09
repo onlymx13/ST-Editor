@@ -39,9 +39,14 @@
             this.WingCapCheck = new System.Windows.Forms.CheckBox();
             this.MetalCapCheck = new System.Windows.Forms.CheckBox();
             this.VanishCapCheck = new System.Windows.Forms.CheckBox();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.LifeCount = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.HOLPXLabel = new System.Windows.Forms.Label();
+            this.HOLPXTextBox = new System.Windows.Forms.TextBox();
+            this.HOLPYLabel = new System.Windows.Forms.Label();
+            this.HOLPYTextBox = new System.Windows.Forms.TextBox();
+            this.HOLPZLabel = new System.Windows.Forms.Label();
+            this.HOLPZTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -50,7 +55,7 @@
             // 
             // OpenFile
             // 
-            this.OpenFile.Location = new System.Drawing.Point(305, 91);
+            this.OpenFile.Location = new System.Drawing.Point(360, 93);
             this.OpenFile.Name = "OpenFile";
             this.OpenFile.Size = new System.Drawing.Size(75, 23);
             this.OpenFile.TabIndex = 0;
@@ -62,7 +67,7 @@
             // 
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("Comic Sans MS", 50F);
-            this.Title.Location = new System.Drawing.Point(223, -17);
+            this.Title.Location = new System.Drawing.Point(278, -15);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(351, 95);
             this.Title.TabIndex = 1;
@@ -70,7 +75,7 @@
             // 
             // AllCaps
             // 
-            this.AllCaps.Location = new System.Drawing.Point(305, 120);
+            this.AllCaps.Location = new System.Drawing.Point(93, 93);
             this.AllCaps.Name = "AllCaps";
             this.AllCaps.Size = new System.Drawing.Size(75, 23);
             this.AllCaps.TabIndex = 2;
@@ -80,7 +85,7 @@
             // 
             // SaveFile
             // 
-            this.SaveFile.Location = new System.Drawing.Point(386, 91);
+            this.SaveFile.Location = new System.Drawing.Point(441, 93);
             this.SaveFile.Name = "SaveFile";
             this.SaveFile.Size = new System.Drawing.Size(75, 23);
             this.SaveFile.TabIndex = 3;
@@ -91,7 +96,7 @@
             // FileNameLabel
             // 
             this.FileNameLabel.AutoSize = true;
-            this.FileNameLabel.Location = new System.Drawing.Point(317, 65);
+            this.FileNameLabel.Location = new System.Drawing.Point(372, 67);
             this.FileNameLabel.Name = "FileNameLabel";
             this.FileNameLabel.Size = new System.Drawing.Size(135, 13);
             this.FileNameLabel.TabIndex = 5;
@@ -99,7 +104,7 @@
             // 
             // NoCaps
             // 
-            this.NoCaps.Location = new System.Drawing.Point(386, 120);
+            this.NoCaps.Location = new System.Drawing.Point(174, 93);
             this.NoCaps.Name = "NoCaps";
             this.NoCaps.Size = new System.Drawing.Size(75, 23);
             this.NoCaps.TabIndex = 6;
@@ -110,7 +115,7 @@
             // Watermark
             // 
             this.Watermark.AutoSize = true;
-            this.Watermark.Location = new System.Drawing.Point(-1, 433);
+            this.Watermark.Location = new System.Drawing.Point(56, 459);
             this.Watermark.Name = "Watermark";
             this.Watermark.Size = new System.Drawing.Size(276, 13);
             this.Watermark.TabIndex = 7;
@@ -119,7 +124,7 @@
             // WingCapCheck
             // 
             this.WingCapCheck.AutoSize = true;
-            this.WingCapCheck.Location = new System.Drawing.Point(342, 150);
+            this.WingCapCheck.Location = new System.Drawing.Point(130, 125);
             this.WingCapCheck.Name = "WingCapCheck";
             this.WingCapCheck.Size = new System.Drawing.Size(79, 17);
             this.WingCapCheck.TabIndex = 8;
@@ -130,7 +135,7 @@
             // MetalCapCheck
             // 
             this.MetalCapCheck.AutoSize = true;
-            this.MetalCapCheck.Location = new System.Drawing.Point(342, 173);
+            this.MetalCapCheck.Location = new System.Drawing.Point(130, 148);
             this.MetalCapCheck.Name = "MetalCapCheck";
             this.MetalCapCheck.Size = new System.Drawing.Size(80, 17);
             this.MetalCapCheck.TabIndex = 9;
@@ -141,7 +146,7 @@
             // VanishCapCheck
             // 
             this.VanishCapCheck.AutoSize = true;
-            this.VanishCapCheck.Location = new System.Drawing.Point(342, 196);
+            this.VanishCapCheck.Location = new System.Drawing.Point(130, 171);
             this.VanishCapCheck.Name = "VanishCapCheck";
             this.VanishCapCheck.Size = new System.Drawing.Size(86, 17);
             this.VanishCapCheck.TabIndex = 10;
@@ -149,34 +154,85 @@
             this.VanishCapCheck.UseVisualStyleBackColor = true;
             this.VanishCapCheck.CheckedChanged += new System.EventHandler(this.VanishCapCheck_CheckedChanged);
             // 
-            // openFileDialog2
-            // 
-            this.openFileDialog2.FileName = "openFileDialog2";
-            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
-            // 
             // LifeCount
             // 
-            this.LifeCount.Location = new System.Drawing.Point(386, 223);
+            this.LifeCount.Location = new System.Drawing.Point(650, 100);
             this.LifeCount.Name = "LifeCount";
-            this.LifeCount.Size = new System.Drawing.Size(100, 20);
+            this.LifeCount.Size = new System.Drawing.Size(38, 20);
             this.LifeCount.TabIndex = 12;
             this.LifeCount.TextChanged += new System.EventHandler(this.LifeCount_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(286, 226);
+            this.label1.Location = new System.Drawing.Point(550, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(94, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "Life Count/Display";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // HOLPXLabel
+            // 
+            this.HOLPXLabel.AutoSize = true;
+            this.HOLPXLabel.Location = new System.Drawing.Point(383, 139);
+            this.HOLPXLabel.Name = "HOLPXLabel";
+            this.HOLPXLabel.Size = new System.Drawing.Size(46, 13);
+            this.HOLPXLabel.TabIndex = 14;
+            this.HOLPXLabel.Text = "HOLP X";
+            // 
+            // HOLPXTextBox
+            // 
+            this.HOLPXTextBox.Location = new System.Drawing.Point(432, 136);
+            this.HOLPXTextBox.Name = "HOLPXTextBox";
+            this.HOLPXTextBox.Size = new System.Drawing.Size(75, 20);
+            this.HOLPXTextBox.TabIndex = 15;
+            this.HOLPXTextBox.TextChanged += new System.EventHandler(this.HOLPXTextBox_TextChanged);
+            // 
+            // HOLPYLabel
+            // 
+            this.HOLPYLabel.AutoSize = true;
+            this.HOLPYLabel.Location = new System.Drawing.Point(383, 167);
+            this.HOLPYLabel.Name = "HOLPYLabel";
+            this.HOLPYLabel.Size = new System.Drawing.Size(46, 13);
+            this.HOLPYLabel.TabIndex = 14;
+            this.HOLPYLabel.Text = "HOLP Y";
+            // 
+            // HOLPYTextBox
+            // 
+            this.HOLPYTextBox.Location = new System.Drawing.Point(432, 164);
+            this.HOLPYTextBox.Name = "HOLPYTextBox";
+            this.HOLPYTextBox.Size = new System.Drawing.Size(75, 20);
+            this.HOLPYTextBox.TabIndex = 15;
+            this.HOLPYTextBox.TextChanged += new System.EventHandler(this.HOLPYTextBox_TextChanged);
+            // 
+            // HOLPZLabel
+            // 
+            this.HOLPZLabel.AutoSize = true;
+            this.HOLPZLabel.Location = new System.Drawing.Point(383, 195);
+            this.HOLPZLabel.Name = "HOLPZLabel";
+            this.HOLPZLabel.Size = new System.Drawing.Size(46, 13);
+            this.HOLPZLabel.TabIndex = 14;
+            this.HOLPZLabel.Text = "HOLP Z";
+            // 
+            // HOLPZTextBox
+            // 
+            this.HOLPZTextBox.Location = new System.Drawing.Point(432, 192);
+            this.HOLPZTextBox.Name = "HOLPZTextBox";
+            this.HOLPZTextBox.Size = new System.Drawing.Size(75, 20);
+            this.HOLPZTextBox.TabIndex = 15;
+            this.HOLPZTextBox.TextChanged += new System.EventHandler(this.HOLPZTextBox_TextChanged);
             // 
             // MainSheet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(922, 479);
+            this.Controls.Add(this.HOLPZTextBox);
+            this.Controls.Add(this.HOLPYTextBox);
+            this.Controls.Add(this.HOLPZLabel);
+            this.Controls.Add(this.HOLPYLabel);
+            this.Controls.Add(this.HOLPXTextBox);
+            this.Controls.Add(this.HOLPXLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LifeCount);
             this.Controls.Add(this.VanishCapCheck);
@@ -209,9 +265,14 @@
         private System.Windows.Forms.CheckBox WingCapCheck;
         private System.Windows.Forms.CheckBox MetalCapCheck;
         private System.Windows.Forms.CheckBox VanishCapCheck;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.TextBox LifeCount;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label HOLPXLabel;
+        private System.Windows.Forms.TextBox HOLPXTextBox;
+        private System.Windows.Forms.Label HOLPYLabel;
+        private System.Windows.Forms.TextBox HOLPYTextBox;
+        private System.Windows.Forms.Label HOLPZLabel;
+        private System.Windows.Forms.TextBox HOLPZTextBox;
     }
 }
 
