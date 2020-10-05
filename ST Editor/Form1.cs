@@ -8,6 +8,7 @@ using System.IO.Compression;
 //using System.IO.Compression.FileSystem;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,6 +23,17 @@ namespace WindowsFormsApp1
         }
         public MainSheet() { InitializeComponent(); }
         string path;
+        public bool hasFileOpen()
+        {
+            if(FileNameLabel.Text != "NO SAVED DATA EXISTS")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public static uint AddressToPointer (uint address)
         {
             address += 0x1B0;
@@ -96,6 +108,12 @@ namespace WindowsFormsApp1
                     capsByte = stream.ReadByte();
                     stream.Position = AddressToPointer(0x0033B21D);
                     LifeCount.Text = ((sbyte)stream.ReadByte()).ToString();
+                    stream.Position = AddressToPointer(0x007F69C8);
+                    starCountl.Text = ((sbyte)stream.ReadByte()).ToString();
+                    stream.Position = AddressToPointer(0x007F6A16);
+                    starDispl.Text = ((sbyte)stream.ReadByte()).ToString();
+                    stream.Position = AddressToPointer(0x007F69CC);
+                    stream.WriteByte(Convert.ToByte(255));
                     byte[] HOLPx;
                     HOLPx = new byte[4];
                     stream.Position = AddressToPointer(0x0033B3C8);
@@ -155,19 +173,28 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void SaveFile_Click(object sender, EventArgs e) {
-            if (path != null) { 
-            if (File.Exists(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt"))
+        private void SaveFile_Click(object sender, EventArgs e)
+        {
+            if (path != null)
             {
-                byte[] file = File.ReadAllBytes(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt");
-                byte[] compress = Compress(file);
-                File.WriteAllBytes(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".gz", compress);
-                File.Move(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".gz", Path.ChangeExtension(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".gz", ".st"));
-                File.Delete(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt");
-                FileNameLabel.Text = "NO SAVED DATA EXISTS";
+                if (File.Exists(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt"))
+                {
+                    byte[] file = File.ReadAllBytes(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt");
+                    byte[] compress = Compress(file);
+                    File.WriteAllBytes(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".gz", compress);
+                    File.Move(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".gz", Path.ChangeExtension(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".gz", ".st"));
+                    File.Delete(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt");
+                    FileNameLabel.Text = "NO SAVED DATA EXISTS";
+                }
+            }
+            else
+            {
+                if (!hasFileOpen())
+                {
+                    FileNameLabel.Text = "OPEN FILE BEFORE SAVING";
+                }
             }
         }
-            }
         private void NoCaps_Click(object sender, EventArgs e)
         {
             if (path != null)
@@ -265,6 +292,58 @@ namespace WindowsFormsApp1
                 }
             }
         }
+        private void starCount_TextChanged(object sender, EventArgs e)
+        {
+            if (path != null && TextChangedFires)
+            {
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                {
+                    stream.Position = AddressToPointer(0x007F69C8);
+                    int.TryParse(starCountl.Text, out int starCount);
+                    stream.WriteByte((byte)starCount);
+                }
+            }
+        }
+        private void killMario_Click(object sender, EventArgs e)
+        {
+            if (path != null)
+            {
+                if (File.Exists(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt"))
+                {
+                    using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        stream.Position = AddressToPointer(0x007F69CC);
+                        stream.WriteByte(Convert.ToByte(255));
+                    }
+                }
+            }
+        }
+        private void fullHpMario_Click(object sender, EventArgs e)
+        {
+            if (path != null)
+            {
+                if (File.Exists(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt"))
+                {
+                    using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        stream.Position = AddressToPointer(0x007F69CC);
+                        stream.WriteByte(Convert.ToByte(2176));
+                    }
+                }
+            }
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (path != null && TextChangedFires)
+            {
+                using (var stream = new FileStream(UpOneLevel(path) + Path.GetFileNameWithoutExtension(path) + ".txt", FileMode.Open, FileAccess.ReadWrite))
+                {
+                    stream.Position = AddressToPointer(0x007F6A16);
+                    int.TryParse(starCountl.Text, out int starDisplay);
+                    stream.WriteByte((byte)starDisplay);
+                }
+            }
+        }
 
         private void HOLPXTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -325,5 +404,12 @@ namespace WindowsFormsApp1
                 }
             }
         }
+
+        private void MainSheet_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

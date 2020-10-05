@@ -1,0 +1,13 @@
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\bin\Release\ST Editor.exe.config
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\bin\Release\ST Editor.exe
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\bin\Release\ST Editor.pdb
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\bin\Release\ICSharpCode.SharpZipLib.xml
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\ST Editor.csprojAssemblyReference.cache
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\WindowsFormsApp1.MainSheet.resources
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\STEditor.Properties.Resources.resources
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\ST Editor.csproj.GenerateResource.cache
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\ST Editor.csproj.CoreCompileInputs.cache
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\ST Editor.csproj.CopyComplete
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\ST Editor.exe
+C:\Users\Alex\Source\Repos\ST-Editor\ST Editor\obj\Release\ST Editor.pdb
